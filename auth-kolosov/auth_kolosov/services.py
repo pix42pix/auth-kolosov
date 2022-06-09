@@ -8,5 +8,5 @@ class Service:
         self._redis = redis
 
     async def process(self) -> str:
-        await self._redis.set("my-key", "value12")
+        await self._redis.set("my-key", "value211")
         return await self._redis.get("my-key")
