@@ -1,0 +1,26 @@
+name: Build & Deploy
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout main branch
+        uses: actions/checkout@v3
+
+      - name: Path
+        run: pwd
+
+      - name: Make env var REDIS_HOST
+        run: echo REDIS_HOST=${{ secrets.DEVREDISHOST }}  > .env
+      
+      - name: Make env var REDIS_PASSWORD
+        run: echo REDIS_PASSWORD=${{ secrets.DEVREDISPASSWORD }} >> .env
+
+      - name: Down auth container
+        run: docker compose down
+
+      - name: Up auth container
+        run: docker compose up -d

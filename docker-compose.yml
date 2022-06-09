@@ -1,0 +1,23 @@
+version: "3.8"
+
+services:    
+  auth-kolosov:
+    container_name: auth-kolosov
+    build: auth-kolosov
+    env_file:
+      - .env
+    ports:
+      - 8000:8000
+    volumes:
+      - "./auth-kolosov/:/code"
+    depends_on:
+      - "redis"
+
+  redis:
+    image: redis
+    env_file:
+      - .env
+    command: ["redis-server",  "--requirepass", "${REDIS_PASSWORD}"]
+    ports:
+      - "6379:6379"
+
